@@ -7,8 +7,9 @@ from application.models import WorkTime
 
 
 @app.route("/")
-def index(): 
-    return render_template('index.html', title = 'home')
+def index():
+    entries = WorkTime.query.order_by(WorkTime.date.desc()).all() 
+    return render_template('index.html', title = 'home', entries = entries)
 
 @app.route("/add", methods = [ "GET", "POST"])
 def add():
@@ -36,3 +37,12 @@ def dashboard():
 @app.route("/layout")
 def layout(): 
     return render_template('layout.html', title = 'layout')
+
+@app.route('/delete/<int:entry_id>')
+def delete(entry_id):
+    entry = WorkTime.query.get_or_404(int(entry_id))
+    db.session.delete(entry)
+    db.session.commit()
+    flash("You have deleted the Work time entry", "Success")
+    return redirect(url_for("index"))
+    
