@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', Courier, monospace;
+
+}
+
+a:hover {
+    color: greenyellow !important;
+}
+
+/* body {
+    padding: 2rem;
+    background-color: #333;
+    color: whitesmoke;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.2rem;
+} */
+
+.navbar {
+    background-color: navy;
+
+}
+
+.navbar-brand {
+    color: whitesmoke;
+    font-weight: bolder;
+    font-size: 2rem !important;
+}
+
+.navbar-nav {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-item {
+    padding-left: 2rem !important;
+}
+
+.navbar-toggler-icon {
+    /* color: whitesmoke !important; */
+    background-color: whitesmoke !important;
+}
+
+
+.navbar-nav a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.form-group {
+    width: auto;
+    padding: 5px;
+}

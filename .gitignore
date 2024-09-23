@@ -1,0 +1,8 @@
+# python cache files
+# __pycache__/
+
+# Database files
+*.db
+
+# init file
+__init__.py

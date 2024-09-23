@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="col-xs-10 col-sm-6 col-md-6 ml-auto mr-auto">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <form action="" method="POST">
+                {{ form.csrf_token() }}
+                <fieldset class="form-group">
+                    <legend class="mb-4">Add Work Hours</legend>
+                    <div class="form-group">
+                        {{ form.name.label(class="form-control-label") }}
+                        {{ form.name(class="form-control form-control-sm" + (' is-invalid' if
+                        form.name.errors else '')) }}
+                        {% if form.name.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.time_in.label }}<br>
+                        {{ form.time_in(class="form-control", required=false) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.time_out.label }}<br>
+                        {{ form.time_out(class="form-control", required=false) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.month.label }}<br>
+                        {{ form.month(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.date.label }}<br>
+                        {{ form.date(class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.workday_type.label }}<br>
+                        {{ form.workday_type(class="form-control") }}
+                    </div>
+
+                    <div class="form-group border-bottom pb-3">
+                        {{ form.submit(class="btn btn-success") }}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
