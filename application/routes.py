@@ -45,4 +45,6 @@ def delete(entry_id):
     db.session.commit()
     flash("You have deleted the Work time entry", "Success")
     return redirect(url_for("index"))
+
+
     
