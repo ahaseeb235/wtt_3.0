@@ -4,14 +4,19 @@
 <div class="col-xs-10 col-sm-6 col-md-6 ml-auto mr-auto">
     <div class="card card-style mb-2">
         <div class="card-body">
+            {% if success_message %}
+            <div class="alert alert-success" role="alert">
+                {{ success_message }}
+            </div>
+            {% endif %}
             <form action="" method="POST">
                 {{ form.csrf_token() }}
                 <fieldset class="form-group">
                     <legend class="mb-4">Add Work Hours</legend>
                     <div class="form-group">
                         {{ form.name.label(class="form-control-label") }}
-                        {{ form.name(class="form-control form-control-sm" + (' is-invalid' if
-                        form.name.errors else '')) }}
+                        {{ form.name(class="form-control form-control-sm" + (' is-invalid' if form.name.errors else ''))
+                        }}
                         {% if form.name.errors %}
                         <div class="invalid-feedback">
                             {% for error in form.name.errors %}
@@ -52,4 +57,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    function validateForm() {
+        var nameField = document.querySelector('input[name="name"]');
+        var nameValue = nameField.value;
+        var regex = /^[A-Za-z\s]*$/; // Regex for letters and spaces only
+
+        if (!regex.test(nameValue)) {
+            alert("Please enter a valid name. Special characters and numbers are not allowed.");
+            nameField.focus();
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
+    }
+</script>
+
 {% endblock %}
