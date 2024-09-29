@@ -9,7 +9,7 @@
                 {{ success_message }}
             </div>
             {% endif %}
-            <form action="" method="POST">
+            <form action="" method="POST" onsubmit="return validateForm()">
                 {{ form.csrf_token() }}
                 <fieldset class="form-group">
                     <legend class="mb-4">Add Work Hours</legend>
@@ -72,5 +72,4 @@
         return true; // Allow form submission
     }
 </script>
-
 {% endblock %}
