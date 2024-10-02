@@ -15,10 +15,11 @@
                     <legend class="mb-4">Add Work Hours</legend>
                     <div class="form-group">
                         {{ form.name.label(class="form-control-label") }}
-                        {{ form.name(class="form-control form-control-sm" + (' is-invalid' if form.name.errors else ''))
-                        }}
+                        {{ form.name(class="form-control form-control-sm" + (' is-invalid' if form.name.errors else ''),
+                        oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"
+                        ) }}
                         {% if form.name.errors %}
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" style="display: block;">
                             {% for error in form.name.errors %}
                             <span>{{ error }}</span>
                             {% endfor %}
@@ -58,18 +59,5 @@
     </div>
 </div>
 
-<script>
-    function validateForm() {
-        var nameField = document.querySelector('input[name="name"]');
-        var nameValue = nameField.value;
-        var regex = /^[A-Za-z\s]*$/; // Regex for letters and spaces only
 
-        if (!regex.test(nameValue)) {
-            alert("Please enter a valid name. Special characters and numbers are not allowed.");
-            nameField.focus();
-            return false; // Prevent form submission
-        }
-        return true; // Allow form submission
-    }
-</script>
 {% endblock %}

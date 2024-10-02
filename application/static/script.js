@@ -1,25 +1,35 @@
-// function validateEntryName(name) {
-//     // Input validation: Check if the input is a string
-//     if (typeof name !== 'string') {
-//         throw new TypeError('Input must alphabets only.');
+
+
+// function validateForm() {
+//     var nameField = document.querySelector('input[name="name"]');
+//     var nameValue = nameField.value;
+//     var regex = /^[A-Za-z\s]*$/;
+
+//     if (!regex.test(nameValue)) {
+//         alert("Please enter a valid name. Only letters and spalces are allowed.");
+//         nameField.focus();
+//         return false;
 //     }
-
-//     // Regular expression to validate that the name contains only alphabets (case insensitive)
-//     const regex = /^[A-Za-z]+$/;
-
-//     // Test the name against the regular expression
-//     return regex.test(name);
+//     return true;
 // }
 
-function validateForm() {
-    var nameField = document.querySelector('input[name="name"]');
-    var nameValue = nameField.value;
-    var regex = /^[A-Za-z\s]*$/; // Regex for letters and spaces only
+const ctx = document.getElementById('myChart');
 
-    if (!regex.test(nameValue)) {
-        alert("Please enter a valid name. Special characters and numbers are not allowed.");
-        nameField.focus();
-        return false; // Prevent form submission
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
     }
-    return true; // Allow form submission
-}
+});

@@ -1,35 +1,120 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-<h1> this is dashboard page</h1>
+<h1>This is the dashboard page</h1>
 
-<div>
-    <canvas id="myChart"></canvas>
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="name_workday_type"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="month_workday_type"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
+{% block javascript %}
 <script>
-    const ctx = document.getElementById('myChart');
+    // Improved handling of JSON data to prevent undefined variables
+    let nameWorkdayTypeData = {{ name_workday_type | default ('[]') | tojson }};
+    let monthWorkdayTypeData = {{ month_workday_type | default ('[]') | tojson }};
 
-    new Chart(ctx, {
-        type: 'bar',
+    // Validate the data received for plotting
+    if (!Array.isArray(nameWorkdayTypeData)) {
+        console.error("Invalid data format for nameWorkdayTypeData. Expected an array.");
+        nameWorkdayTypeData = [];
+    }
+    if (!Array.isArray(monthWorkdayTypeData)) {
+        console.error("Invalid data format for monthWorkdayTypeData. Expected an array.");
+        monthWorkdayTypeData = [];
+    }
+
+    // Update scale defaults for linear charts
+    Chart.scaleService.updateScaleDefaults('linear', {
+        ticks: {
+            min: 0
+        }
+    });
+
+    // Common chart options for consistency
+    const commonChartOptions = {
+        title: {
+            display: true,
+            fontSize: 20,
+        },
+        legend: {
+            position: "right",
+            labels: {
+                fontColor: "gray"
+            },
+            display: true,
+        },
+        elements: {
+            hitRadius: 3,
+        }
+    };
+
+    // Pie chart for Name Vs Workday Type
+    let nameWorkdayTypeChart = new Chart(document.getElementById("name_workday_type"), {
+        type: 'pie',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['Name', 'Workday Type'],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
+                label: "Name Vs Workday Type",
+                data: nameWorkdayTypeData,
+                backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                borderWidth: 1,
+                hoverBorderColor: "black",
+                hoverBorderWidth: 2,
+                hoverBackgroundColor: 'rgba(154, 245, 140)',
+                pointHoverRadius: 5
+            }],
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            ...commonChartOptions,
+            title: {
+                ...commonChartOptions.title,
+                text: "Name Vs Workday Type",
+            },
+        }
+    });
+
+    // Bar chart for Month Vs Workday Type
+    let monthWorkdayTypeChart = new Chart(document.getElementById("month_workday_type"), {
+        type: 'bar',
+        data: {
+            labels: ['Investment', 'Rent', 'Salary', 'Side Hustle'],
+            datasets: [{
+                label: "Month Vs Workday Type",
+                data: monthWorkdayTypeData,
+                backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                borderWidth: 1,
+                hoverBorderColor: "black",
+                hoverBorderWidth: 2,
+                hoverBackgroundColor: 'rgba(154, 245, 140)',
+                pointHoverRadius: 5
+            }],
+        },
+        options: {
+            ...commonChartOptions,
+            title: {
+                ...commonChartOptions.title,
+                text: "Month vs Workday Type",
+            },
         }
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
 {% endblock %}
